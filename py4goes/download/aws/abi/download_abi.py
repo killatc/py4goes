@@ -2,10 +2,19 @@ import s3fs
 import datetime as dt
 import os
 
-base_path = "/datalake/goes16"
-
 
 def get_julian_day(year, month, day):
+    """
+    Calculate the Julian day for a given date.
+
+    Parameters:
+        year (int or str): The year.
+        month (int or str): The month.
+        day (int or str): The day.
+
+    Returns:
+        str: The Julian day as a three-digit string.
+    """
     if isinstance(year, int): year = str(year)
     if isinstance(month, int): month = str(month).zfill(2)
     if isinstance(day, int): day = str(day).zfill(2)
@@ -14,7 +23,22 @@ def get_julian_day(year, month, day):
     return str(fmt_date.timetuple().tm_yday).zfill(3)
 
 
-def download_abi_data(year, month, day, hour, product='ABI-L2-CMIPF', channel=13):
+def download_abi_data(year, month, day, hour, base_path, product='ABI-L2-CMIPF', channel=13):
+    """
+    Download Advanced Baseline Imager (ABI) data from the GOES-16 satellite.
+
+    Parameters:
+        year (int or str): The year.
+        month (int or str): The month.
+        day (int or str): The day.
+        hour (int or str): The hour.
+        base_path (str): The base path where the data will be downloaded.
+        product (str, optional): The ABI product name. Default is 'ABI-L2-CMIPF'.
+        channel (int or str, optional): The ABI channel number. Default is 13.
+
+    Returns:
+        None. Downloads the data files to local storage.
+    """
     if isinstance(year, int): year = str(year)
     if isinstance(month, int): month = str(month).zfill(2)
     if isinstance(day, int): day = str(day).zfill(2)

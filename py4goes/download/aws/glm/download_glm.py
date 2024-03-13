@@ -2,10 +2,19 @@ import s3fs
 import datetime as dt
 import os
 
-base_path = "/datalake/goes16"
-
 
 def get_julian_day(year, month, day):
+    """
+    Calculate the Julian day for a given date.
+
+    Parameters:
+        year (int or str): The year.
+        month (int or str): The month.
+        day (int or str): The day.
+
+    Returns:
+        str: The Julian day as a three-digit string.
+    """
     if isinstance(year, int): year = str(year)
     if isinstance(month, int): month = str(month).zfill(2)
     if isinstance(day, int): day = str(day).zfill(2)
@@ -14,7 +23,21 @@ def get_julian_day(year, month, day):
     return str(fmt_date.timetuple().tm_yday).zfill(3)
 
 
-def download_glm_data(year, month, day, hour, product='GLM-L2-LCFA'):
+def download_glm_data(year, month, day, hour, base_path, product='GLM-L2-LCFA'):
+    """
+    Download Geostationary Lightning Mapper (GLM) data from the GOES-16 satellite.
+
+    Parameters:
+        year (int or str): The year.
+        month (int or str): The month.
+        day (int or str): The day.
+        hour (int or str): The hour.
+        base_path (str): The base path where the data will be downloaded.
+        product (str, optional): The GLM product name. Default is 'GLM-L2-LCFA'.
+
+    Returns:
+        None. Download
+    """
     if isinstance(year, int): year = str(year)
     if isinstance(month, int): month = str(month).zfill(2)
     if isinstance(day, int): day = str(day).zfill(2)
